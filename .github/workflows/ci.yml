@@ -1,0 +1,35 @@
+name: Engine Validation Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-verify:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup Go Environment
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+          cache: true
+
+      - name: Install Dependencies
+        run: go mod download
+
+      # STEP 1: Fast Unit Tests (Pawn logic, Check detection, etc.)
+      - name: Run Unit Tests
+        run: go test -v ./...
+
+      # STEP 2: The Heavy Perft Validation (Uses the build tag)
+      - name: Run Perft Verification Suite
+        run: go test -tags=perft -v ./internal/tests/...

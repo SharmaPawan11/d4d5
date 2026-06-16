@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  setup:
+    desc: Initializes the local development environment
+    cmds:
+      - task: install-hooks
+      # You can add other setup tasks here later (e.g., go mod tidy, downloading tools)
+
+  install-hooks:
+    desc: Copies tracked Git hooks into the local .git folder
+    cmds:
+      - mkdir -p .git/hooks
+      - cp scripts/pre-push .git/hooks/pre-push
+      - chmod +x .git/hooks/pre-push
+      - cp scripts/post-merge .git/hooks/post-merge
+      - chmod +x .git/hooks/post-merge
+    status:
+      - test -x .git/hooks/pre-push
+      - cmp -s scripts/pre-push .git/hooks/pre-push
+      - test -x .git/hooks/post-merge
+      - cmp -s scripts/post-merge .git/hooks/post-merge
