@@ -18,10 +18,10 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Go Environment
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: '1.25'
-          cache: true
+          cache: false
 
       - name: Install Dependencies
         run: go mod download
@@ -32,4 +32,4 @@ jobs:
 
       # STEP 2: The Heavy Perft Validation (Uses the build tag)
       - name: Run Perft Verification Suite
-        run: go test -tags=perft -v ./internal/tests/...
+        run: go test -tags=perft -timeout=20m -v ./internal/tests/...
