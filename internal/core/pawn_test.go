@@ -83,7 +83,7 @@ func TestPawnMoves(t *testing.T) {
 				{
 					Target: PiecePosition{
 						FileIndex: 5,
-						RankIndex: 3,
+						RankIndex: 2,
 					},
 				},
 				{
