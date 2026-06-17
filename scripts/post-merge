@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "🔄 Checking for environment updates..."
+echo "Checking for environment updates..."
 task install-hooks
